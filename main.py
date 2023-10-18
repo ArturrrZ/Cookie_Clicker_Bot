@@ -14,9 +14,15 @@ time.sleep(1)
 cookie=driver.find_element(By.XPATH,value='//*[@id="cookie"]')
 items=driver.find_elements(By.CSS_SELECTOR,'#store div')
 items_id=[item.get_attribute('id') for item in items]
-print(items_id)
-for _ in range(10):
+timeout=time.time() + 5
+#end of the game
+five_minutes=time.time() + 60*5
 
+end=False
+while not end:
     cookie.click()
+    if time.time() > timeout:
+        end=True
+        print('Game is ended')
 
 driver.close()

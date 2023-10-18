@@ -38,7 +38,7 @@ while not end:
             cookies_upgrade[item_prices[n]] = items_id[n]
 
         print(cookies_upgrade)
-        end=True
+
         # Get current cookie count
 
         money_element = driver.find_element(By.CSS_SELECTOR, '#money')
@@ -46,4 +46,13 @@ while not end:
         if ',' in money:
             money = money.replace(',', '')
         mon = int(money)
+        affordable_upgrades=[]
+        for cost, id in cookies_upgrade.items():
+            if mon > cost:
+                affordable_upgrades.append(id)
+
+        maximum_upgrade=driver.find_element(By.ID,affordable_upgrades[-1]).click()
+
+
+
 driver.close()

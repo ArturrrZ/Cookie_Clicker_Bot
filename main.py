@@ -46,13 +46,30 @@ while not end:
         if ',' in money:
             money = money.replace(',', '')
         mon = int(money)
-        affordable_upgrades=[]
+
+        #-
+        # Find upgrades that we can currently afford
+
+        affordable_upgrades = {}
+
         for cost, id in cookies_upgrade.items():
             if mon > cost:
-                affordable_upgrades.append(id)
+                affordable_upgrades[cost] = id
+        # Purchase the most expensive affordable upgrade
 
-        maximum_upgrade=driver.find_element(By.ID,affordable_upgrades[-1]).click()
+        highest_upgrade = max(affordable_upgrades)
+        print(highest_upgrade)
+        highest_id = affordable_upgrades[highest_upgrade]
 
+        driver.find_element(By.ID, highest_id).click()
+
+        timeout = time.time() + 5
+
+        # After 5 minutes stop the bot and check the cookies per second count.
+        if time.time() > five_minutes:
+            cookie_per_s = driver.find_element(By.ID, "cps").text
+            print(cookie_per_s)
+            break
 
 
 driver.close()

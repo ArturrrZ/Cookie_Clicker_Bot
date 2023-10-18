@@ -17,12 +17,23 @@ items_id=[item.get_attribute('id') for item in items]
 timeout=time.time() + 5
 #end of the game
 five_minutes=time.time() + 60*5
-
+for item in items:
+    print(item.text)
 end=False
 while not end:
     cookie.click()
     if time.time() > timeout:
-        end=True
-        print('Game is ended')
+        upgrades=driver.find_elements(By.CSS_SELECTOR,'#store b')
+        upgrades_cost=[]
+        for upgrade in upgrades:
+
+            element=upgrade.text
+            if element !='':
+
+                price_to_buy=int(element.split('-')[1].strip().replace(',',''))
+                print(price_to_buy)
+                upgrades_cost.append(price_to_buy)
+            end=True
+
 
 driver.close()
